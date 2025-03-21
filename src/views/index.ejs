@@ -1,0 +1,18 @@
+<html lang="en">
+  <%- include("./partials/head.ejs")%>
+  <body>
+    <%- include("./partials/header.ejs")%>
+
+    <h1>Timeline</h1>
+    <div class="post-data">
+      <% if (data.length > 0){ %> <% data.forEach (data => { %>
+      <div class="post-item">
+        <h3 class="name"><%= data.name%></h3>
+        <span class="date">- <%= data.createdAt%></span>
+        <p class="message"><%= data.message%></p>
+      </div>
+
+      <%}) %> <% } %>
+    </div>
+  </body>
+</html>
