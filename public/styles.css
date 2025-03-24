@@ -81,9 +81,12 @@ input {
 
 /* main */
 .post-data {
-  padding: 25px 50px 25px 50px;
+  margin: 25px 50px 25px 50px;
   border-bottom: 3px solid rgb(0, 0, 0);
 }
 .post-item {
   margin-bottom: 30px;
+}
+.input-data {
+  margin-left: 25px;
 }
