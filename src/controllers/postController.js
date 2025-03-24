@@ -3,13 +3,23 @@ const data = require('../data');
 
 const homePage = (req, res) => {
   Post.find()
+
     .sort({ createdAt: -1 })
+
     .then((result) => {
-      res.render('index', { data: result });
+      const formattedData = result.map((post) => ({
+        ...post._doc,
+        createdAt: new Intl.DateTimeFormat('en-US', {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric',
+        }).format(post.createdAt),
+      }));
+      res.render('index', { data: formattedData });
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).send('Internal Server Error'); // Додано відповідь на випадок помилки
+      res.status(500).send('Internal Server Error');
     });
 };
 

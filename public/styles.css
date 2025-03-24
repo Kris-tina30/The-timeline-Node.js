@@ -89,4 +89,19 @@ input {
 }
 .input-data {
   margin-left: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.input-data input {
+  width: 12%;
+}
+.input-data textarea {
+  width: 50%;
+}
+.post {
+  width: 10%;
+  background-color: rgb(126, 126, 239);
+  color: rgb(255, 255, 255);
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.7);
 }
