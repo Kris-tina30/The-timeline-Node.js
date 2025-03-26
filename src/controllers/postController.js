@@ -1,4 +1,5 @@
 const Post = require('../models/posts');
+const Comment = require('../models/commentModel');
 const data = require('../data');
 
 const homePage = (req, res) => {
@@ -34,10 +35,24 @@ const addPost = (req, res) => {
       console.log(err);
     });
 };
+
+const addComment = (req, res) => {
+  const addNewComment = new Comment(req.body);
+  addNewComment
+    .save()
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 const notFoundPage = (req, res) => {};
 
 module.exports = {
   homePage,
   addPost,
+  addComment,
   notFoundPage,
 };
