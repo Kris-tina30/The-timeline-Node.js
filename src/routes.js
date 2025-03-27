@@ -5,6 +5,6 @@ const postController = require('./controllers/postController');
 // render data
 router.get('/', postController.homePage);
 router.post('/add-post', postController.addPost);
-router.post('/add-comment', postController.addComment);
+router.post('/add-comment/:postId', postController.addComment);
 
 module.exports = router;

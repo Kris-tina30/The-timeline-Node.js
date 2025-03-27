@@ -6,10 +6,11 @@ const homePage = (req, res) => {
   Post.find()
 
     .sort({ createdAt: -1 })
-
+    .populate('comments', '_id userComment')
     .then((result) => {
       const formattedData = result.map((post) => ({
         ...post._doc,
+        // comments: post.comments,
         createdAt: new Intl.DateTimeFormat('en-US', {
           month: 'long',
           day: 'numeric',
@@ -37,15 +38,39 @@ const addPost = (req, res) => {
 };
 
 const addComment = (req, res) => {
-  const addNewComment = new Comment(req.body);
-  addNewComment
-    .save()
-    .then(() => {
-      res.redirect('/');
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  let postId = req.params.postId;
+  if (req.body.userComment !== '' && postId) {
+    let commentData = {
+      ...req.body,
+      post: postId,
+    };
+    const addNewComment = new Comment(commentData);
+
+    addNewComment
+      .save()
+      .then((savedComment) => {
+        Post.findById(postId)
+          .then((postInfo) => {
+            console.log(postInfo);
+            postInfo.comments.push(savedComment._id);
+            postInfo
+              .save()
+              .then(() => {
+                res.redirect('/');
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 };
 
 const notFoundPage = (req, res) => {};

@@ -87,16 +87,14 @@ input {
 .post-item {
   margin-bottom: 30px;
 }
-.input-data {
+.form {
   margin-left: 25px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.input-data input {
-  width: 12%;
-}
-.input-data textarea {
+
+.form textarea {
   width: 50%;
 }
 .post {
@@ -104,4 +102,21 @@ input {
   background-color: rgb(126, 126, 239);
   color: rgb(255, 255, 255);
   box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.7);
+}
+.comment {
+  width: 15%;
+  color: rgb(255, 255, 255);
+  background-color: rgb(144, 229, 150);
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.7);
+}
+.message {
+  background-color: rgb(255, 228, 196);
+  padding: 10px;
+}
+.comment-item {
+  background-color: rgb(255, 228, 196);
+  padding: 10px;
+}
+.comment-text {
+  margin: 10px;
 }
