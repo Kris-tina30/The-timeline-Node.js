@@ -2,13 +2,13 @@ const Post = require('../models/posts');
 const Comment = require('../models/commentModel');
 const data = require('../data');
 
-const homePage = (req, res) => {
-  Post.find()
-
+const getFormattedPosts = () => {
+  return Post.find()
     .sort({ createdAt: -1 })
     .populate('comments', '_id userComment')
     .then((result) => {
-      const formattedData = result.map((post) => ({
+      return result.map((post) => ({
+        // Додано return перед result.map
         ...post._doc,
         // comments: post.comments,
         createdAt: new Intl.DateTimeFormat('en-US', {
@@ -17,18 +17,39 @@ const homePage = (req, res) => {
           year: 'numeric',
         }).format(post.createdAt),
       }));
-      res.render('index', { data: formattedData });
+    });
+};
+
+const homePage = (req, res) => {
+  getFormattedPosts()
+    .then((formattedData) => {
+      res.render('index', { data: formattedData || [], errors: '' });
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).send('Internal Server Error');
     });
 };
 
 const addPost = (req, res) => {
   const addNewPost = new Post(req.body);
+
   addNewPost
     .save()
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        return getFormattedPosts().then((formattedData) => {
+          res.render('index', { data: formattedData, errors: err.errors });
+        });
+      }
+      res.status(500).send('Internal Server Error');
+    });
+};
+
+const deletePost = (req, res) => {
+  Post.findByIdAndDelete(req.params.id)
     .then(() => {
       res.redirect('/');
     })
@@ -76,8 +97,10 @@ const addComment = (req, res) => {
 const notFoundPage = (req, res) => {};
 
 module.exports = {
+  getFormattedPosts,
   homePage,
   addPost,
+  deletePost,
   addComment,
   notFoundPage,
 };

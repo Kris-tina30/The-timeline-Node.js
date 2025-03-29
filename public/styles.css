@@ -110,13 +110,23 @@ input {
   box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.7);
 }
 .message {
-  background-color: rgb(255, 228, 196);
+  background-color: rgb(126, 126, 239);
   padding: 10px;
+  width: 850px;
 }
 .comment-item {
-  background-color: rgb(255, 228, 196);
+  background-color: rgb(144, 229, 150);
   padding: 10px;
+  margin-top: 10px;
 }
 .comment-text {
   margin: 10px;
+}
+.message-wrap {
+  display: flex;
+  gap: 15px;
+}
+.delete-btn {
+  background-color: rgb(237, 49, 49);
+  color: rgb(255, 255, 255);
 }
